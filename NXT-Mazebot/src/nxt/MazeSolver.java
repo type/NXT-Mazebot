@@ -31,7 +31,7 @@ public class MazeSolver {
 	 */
 	public MazeSolver() {
 		// Set up motors and sensors
-		myPilot = new DifferentialPilot(2.5f, -5.5f, Motor.B, Motor.A);
+		myPilot = new DifferentialPilot(2.5f, 5.5f, Motor.B, Motor.A);
 		myFrontSensor = new LightSensor(SensorPort.S1);
 		myRightSensor = new LightSensor(SensorPort.S2);
 
@@ -49,32 +49,22 @@ public class MazeSolver {
 
 		// While we are moving
 		while (myPilot.isMoving()) {
+
 			// Check for a change in the light value on the right
-			if (myRightSensor.getLightValue() > 40) {
-				// Stop momentarily
-				myPilot.stop();
-
-				// Determine what to do
-				// myPilot.rotateRight();
-				myPilot.rotate(90);
-			} else if (myFrontSensor.getLightValue() > 40) {
-				// If we can't go forward
-				// Stop momentarily
-				myPilot.stop();
-
-				// Determine what to do
-				// myPilot.rotateRight();
-				myPilot.rotate(90);
+			if (rightIsClear()) {
+				// Turn right
+				turnRight();
+			} else if (!frontIsClear()) {
+				// Turn right
+				turnRight();
 			}
 
-			// Move some more, and return right away
-			myPilot.travel(travelDist, true);
+			// Move forward
+			goForward();
 		}
 
-		// We should have completed by now
-		System.out.println("Done");
-		Button.waitForPress();
-
+		// We are done
+		mazeSolved();
 	}
 
 	public static void main(String[] args) {
@@ -94,6 +84,58 @@ public class MazeSolver {
 		myRightSensor.calibrateHigh();
 		myFrontSensor.calibrateLow();
 		myRightSensor.calibrateLow();
+	}
+
+	/**
+	 * Right turn method
+	 */
+	private void turnRight() {
+		System.out.println("R");
+		// Stop momentarily
+		myPilot.stop();
+
+		// Turn Right
+		myPilot.rotate(90);
+	}
+
+	/**
+	 * Go forward method
+	 */
+	private void goForward() {
+		System.out.println("F");
+		// Move some more, and return right away
+		myPilot.travel(travelDist, true);
+	}
+
+	/**
+	 * Right is clear method
+	 * 
+	 * @return True if right is clear
+	 */
+	private boolean rightIsClear() {
+		//
+		return myRightSensor.getLightValue() > 40;
+	}
+
+	/**
+	 * Front is clear method
+	 * 
+	 * @return True if front is clear
+	 */
+	private boolean frontIsClear() {
+		//
+		return myFrontSensor.getLightValue() > 40;
+	}
+
+	/**
+	 * Maze solved method
+	 */
+	private void mazeSolved() {
+		// We should have completed by now
+		System.out.println("Done");
+		Button.waitForPress();
+		System.out.println("X");
+		// Play Victorious Sound!
 	}
 
 }
