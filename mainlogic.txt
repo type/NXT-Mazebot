@@ -1,0 +1,33 @@
+Main movement logic:
+
+
+turnRight(){
+	turn 90degrees right in place;
+	drawChar('R');
+}
+
+goForward(){
+	move forward a foot or whatever;
+	drawChar('F');
+}
+
+while( front != target) {
+	if (rightIsClear()){
+		turnRight();
+		if (front == target) {
+			exit;
+		}
+		goForward();
+	}
+	
+	else {
+		if (frontIsClear()){
+			goForward();
+		}
+		else {
+			turnRight();
+		}
+	}
+}
+drawChar('X');
+play a victorious sound!
