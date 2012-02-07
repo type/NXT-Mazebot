@@ -1,0 +1,9 @@
+Robot will solve a maze.
+Maze shall be defined by thick (~1 in.) lines on a light-colored tile floor. Tentative size of each "cell" in the maze is 12 sq. in.
+ The "exit" shall be a piece of white paper (albedo > floor's).
+
+The leJOS NXT API is available here: 
+http://lejos.sourceforge.net/nxt/nxj/api/index.html
+
+Basic information on NXT parts is available here:
+http://cache.lego.com/upload/contentTemplating/Mindstorms2BuildingInstructions/otherfiles/downloadA0B7A698E231D3E619C43ECCFFE2F27F.pdf
