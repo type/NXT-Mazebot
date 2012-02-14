@@ -1,6 +1,7 @@
 package nxt;
 
 import org.lejos.sample.compasstest.CompassMindSensor;
+
 import lejos.nxt.Button;
 import lejos.nxt.LightSensor;
 import lejos.nxt.Motor;
@@ -40,6 +41,18 @@ public class MazeSolver {
 	 * The space between wheels
 	 */
 	private static final double axelLength = 9.6f;
+	/**
+	 * Light Threshold
+	 */
+	private static final int lightThreshold = 150;
+	/**
+	 * End of maze threshold
+	 */
+	private static final int endThreshold = 105;
+	/**
+	 * Speed to rotate
+	 */
+	private static final double rotateSpeed = 30.0f;
 
 	/**
 	 * Default constructor, initializes the motors and sensors
@@ -52,7 +65,7 @@ public class MazeSolver {
 		myCompass = new CompassSensor(SensorPort.S3);
 		
 		//Set turn speed
-		myPilot.setRotateSpeed(30f);
+		myPilot.setRotateSpeed(rotateSpeed);
 
 		// Calibrate
 		doCalibration();
@@ -168,7 +181,7 @@ public class MazeSolver {
 		//
 		System.out.print("Right Light Value: ");
 		System.out.println(myRightSensor.getLightValue());
-		return myRightSensor.getLightValue() > 150;
+		return myRightSensor.getLightValue() > lightThreshold;
 	}
 
 	/**
@@ -180,7 +193,7 @@ public class MazeSolver {
 		//
 		System.out.print("Front Light Value: ");
 		System.out.println(myFrontSensor.getLightValue());
-		return myFrontSensor.getLightValue() > 150;
+		return myFrontSensor.getLightValue() > lightThreshold;
 	}
 
 	/**
@@ -189,7 +202,7 @@ public class MazeSolver {
 	 * @return True if we are at target
 	 */
 	private boolean atTarget() {
-		return myFrontSensor.getLightValue() > 105;
+		return myFrontSensor.getLightValue() > endThreshold;
 	}
 
 	/**
