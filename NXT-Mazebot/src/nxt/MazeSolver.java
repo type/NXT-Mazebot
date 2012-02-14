@@ -36,7 +36,7 @@ public class MazeSolver {
 		myRightSensor = new LightSensor(SensorPort.S2);
 
 		// Calibrate?
-		// doCalibration();
+		 doCalibration();
 	}
 
 	/**
@@ -78,11 +78,23 @@ public class MazeSolver {
 	 */
 	private void doCalibration() {
 		// Prep sensor
-		myFrontSensor.setFloodlight(true);
-		myRightSensor.setFloodlight(true);
+		// myFrontSensor.setFloodlight(true);
+		// myRightSensor.setFloodlight(true);
+		
+		System.out.println("Calibrate High Front");
+		Button.waitForPress();
 		myFrontSensor.calibrateHigh();
+		
+		System.out.println("Calibrate High Right");
+		Button.waitForPress();
 		myRightSensor.calibrateHigh();
+		
+		System.out.println("Calibrate Low Front");
+		Button.waitForPress();
 		myFrontSensor.calibrateLow();
+		
+		System.out.println("Calibrate Low Right");
+		Button.waitForPress();
 		myRightSensor.calibrateLow();
 	}
 
