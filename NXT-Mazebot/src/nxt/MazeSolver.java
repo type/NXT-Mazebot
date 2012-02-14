@@ -128,7 +128,7 @@ public class MazeSolver {
 		//
 		System.out.print("Right Light Value: ");
 		System.out.print(myRightSensor.getLightValue());
-		return myRightSensor.getLightValue() > 40;
+		return myRightSensor.getLightValue() > 150;
 	}
 
 	/**
@@ -140,9 +140,14 @@ public class MazeSolver {
 		//
 		System.out.print("Front Light Value: ");
 		System.out.print(myRightSensor.getLightValue());
-		return myFrontSensor.getLightValue() > 40;
+		return myFrontSensor.getLightValue() > 150;
 	}
 	
+	/**
+	 * Checks for a bright object in front to indicate that we are at the target
+	 * 
+	 * @return True if we are at target
+	 */
 	private boolean atTarget()
 	{
 		return myFrontSensor.getLightValue() > 200;
