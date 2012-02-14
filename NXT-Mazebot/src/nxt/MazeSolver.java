@@ -1,9 +1,11 @@
 package nxt;
 
+import org.lejos.sample.compasstest.CompassMindSensor;
 import lejos.nxt.Button;
 import lejos.nxt.LightSensor;
 import lejos.nxt.Motor;
 import lejos.nxt.SensorPort;
+import lejos.nxt.addon.CompassSensor;
 import lejos.robotics.navigation.DifferentialPilot;
 
 /**
@@ -22,21 +24,38 @@ public class MazeSolver {
 	 */
 	private LightSensor myFrontSensor, myRightSensor;
 	/**
+	 * Our compass sensor
+	 */
+	private CompassSensor myCompass;
+	
+	/**
 	 * 12 Inches, what we think is the length of one tile
 	 */
 	private static final double travelDist = 30.48f;
+	/**
+	 * The wheel diameter
+	 */
+	private static final double wheelDiam = 2.5f;
+	/**
+	 * The space between wheels
+	 */
+	private static final double axelLength = 9.6f;
 
 	/**
 	 * Default constructor, initializes the motors and sensors
 	 */
 	public MazeSolver() {
 		// Set up motors and sensors
-		myPilot = new DifferentialPilot(2.5f, 5.5f, Motor.B, Motor.A);
+		myPilot = new DifferentialPilot(wheelDiam, axelLength, Motor.B, Motor.A, true);
 		myFrontSensor = new LightSensor(SensorPort.S1);
 		myRightSensor = new LightSensor(SensorPort.S2);
+		myCompass = new CompassSensor(SensorPort.S3);
+		
+		//Set turn speed
+		myPilot.setRotateSpeed(30f);
 
-		// Calibrate?
-		 doCalibration();
+		// Calibrate
+		doCalibration();
 	}
 
 	/**
@@ -54,9 +73,24 @@ public class MazeSolver {
 			if (rightIsClear()) {
 				// Turn right
 				turnRight();
-			} else if (!frontIsClear()) {
-				// Turn right
-				turnRight();
+				
+				//Check for result
+				if (atTarget())
+				{
+					break;
+				}
+
+				//Move forward
+				goForward();
+
+			} else {
+				//Check for front is clear
+				if (frontIsClear()) {
+					goForward();
+				} else {
+					// Turn right
+					turnRight();
+				}
 			}
 
 			// Move forward
@@ -78,24 +112,19 @@ public class MazeSolver {
 	 */
 	private void doCalibration() {
 		// Prep sensor
-		// myFrontSensor.setFloodlight(true);
-		// myRightSensor.setFloodlight(true);
-		
+		System.out.println("Port 1: Front Sensor");
+		System.out.println("Port 2: Right Sensor");
+		System.out.println("Port 3: Compass\n");
+
+		//Calibrate front
 		System.out.println("Calibrate High Front");
 		Button.waitForPress();
 		myFrontSensor.calibrateHigh();
-		
+
+		//Calibrate right
 		System.out.println("Calibrate High Right");
 		Button.waitForPress();
 		myRightSensor.calibrateHigh();
-		
-		System.out.println("Calibrate Low Front");
-		Button.waitForPress();
-		myFrontSensor.calibrateLow();
-		
-		System.out.println("Calibrate Low Right");
-		Button.waitForPress();
-		myRightSensor.calibrateLow();
 	}
 
 	/**
@@ -105,9 +134,20 @@ public class MazeSolver {
 		System.out.println("R");
 		// Stop momentarily
 		myPilot.stop();
-
+		
+		//Get current bearing
+		float x = myCompass.getDegrees();
+		float y = (x + 90f) % 360;
+		
+		//Get us within a threshold of the degree that we want
+		while( x < y - 5)
+		{
+			myPilot.rotate(5);
+			x = myCompass.getDegrees();
+		}
+		
 		// Turn Right
-		myPilot.rotate(90);
+		//myPilot.rotate(-90);
 	}
 
 	/**
@@ -116,7 +156,7 @@ public class MazeSolver {
 	private void goForward() {
 		System.out.println("F");
 		// Move some more, and return right away
-		myPilot.travel(travelDist, true);
+		myPilot.travel(travelDist);
 	}
 
 	/**
@@ -127,7 +167,7 @@ public class MazeSolver {
 	private boolean rightIsClear() {
 		//
 		System.out.print("Right Light Value: ");
-		System.out.print(myRightSensor.getLightValue());
+		System.out.println(myRightSensor.getLightValue());
 		return myRightSensor.getLightValue() > 150;
 	}
 
@@ -139,18 +179,17 @@ public class MazeSolver {
 	private boolean frontIsClear() {
 		//
 		System.out.print("Front Light Value: ");
-		System.out.print(myRightSensor.getLightValue());
+		System.out.println(myFrontSensor.getLightValue());
 		return myFrontSensor.getLightValue() > 150;
 	}
-	
+
 	/**
 	 * Checks for a bright object in front to indicate that we are at the target
 	 * 
 	 * @return True if we are at target
 	 */
-	private boolean atTarget()
-	{
-		return myFrontSensor.getLightValue() > 200;
+	private boolean atTarget() {
+		return myFrontSensor.getLightValue() > 105;
 	}
 
 	/**
