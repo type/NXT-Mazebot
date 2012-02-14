@@ -1,7 +1,5 @@
 package nxt;
 
-import org.lejos.sample.compasstest.CompassMindSensor;
-
 import lejos.nxt.Button;
 import lejos.nxt.LightSensor;
 import lejos.nxt.Motor;
