@@ -48,7 +48,7 @@ public class MazeSolver {
 		myPilot.travel(travelDist, true);
 
 		// While we are moving
-		while (myPilot.isMoving()) {
+		while (!atTarget()) {
 
 			// Check for a change in the light value on the right
 			if (rightIsClear()) {
@@ -129,6 +129,11 @@ public class MazeSolver {
 		System.out.print("Front Light Value: ");
 		System.out.print(myRightSensor.getLightValue());
 		return myFrontSensor.getLightValue() > 40;
+	}
+	
+	private boolean atTarget()
+	{
+		return myFrontSensor.getLightValue() > 200;
 	}
 
 	/**
