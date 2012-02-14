@@ -36,7 +36,7 @@ public class MazeSolver {
 		myRightSensor = new LightSensor(SensorPort.S2);
 
 		// Calibrate?
-		doCalibration();
+		// doCalibration();
 	}
 
 	/**
