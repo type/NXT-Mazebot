@@ -46,7 +46,7 @@ public class MazeSolver {
 	/**
 	 * End of maze threshold
 	 */
-	private static final int endThreshold = 105;
+	private static final int endThreshold = 90;
 	/**
 	 * Speed to rotate
 	 */
@@ -79,7 +79,8 @@ public class MazeSolver {
 	public static void main(String[] args) {
 		// Create and start the solver
 		MazeSolver mySolver = new MazeSolver();
-		mySolver.solve();
+		//mySolver.solve();
+		mySolver.testLights();
 	}
 
 	/**
@@ -145,8 +146,7 @@ public class MazeSolver {
 	}
 
 	/**
-	 * Right turn method
-	 * Uses compass
+	 * Right turn method Uses compass
 	 */
 	private void turnRight() {
 		System.out.println("R");
@@ -155,12 +155,13 @@ public class MazeSolver {
 
 		// Get current bearing
 		float x = myCompass.getDegrees();
-		float y = (x + 90f) % 360;
+		float y = (x - 90f) % 360;
 
 		// Get us within a threshold of the degree that we want
 		while (x < y - 3) {
-			myPilot.rotate(5);
+			myPilot.rotate(-5);
 			x = myCompass.getDegrees();
+			System.out.println("Bearing: " + x);
 		}
 
 		// Turn Right
@@ -183,7 +184,8 @@ public class MazeSolver {
 	 */
 	private boolean rightIsClear() {
 		//
-		System.out.print("Right Light Value: ");
+		//System.out.print("Right Light Value: ");
+		System.out.print("R: ");
 		System.out.println(myRightSensor.getLightValue());
 		return myRightSensor.getLightValue() > lightThreshold;
 	}
@@ -195,7 +197,8 @@ public class MazeSolver {
 	 */
 	private boolean frontIsClear() {
 		//
-		System.out.print("Front Light Value: ");
+		//System.out.print("Front Light Value: ");
+		System.out.print("F: ");
 		System.out.println(myFrontSensor.getLightValue());
 		return myFrontSensor.getLightValue() > lightThreshold;
 	}
@@ -218,6 +221,15 @@ public class MazeSolver {
 		Button.waitForPress();
 		System.out.println("X");
 		// Play Victorious Sound!
+	}
+
+	public void testLights() {
+		for (int i = 0; i < 10; i++) {
+			//goForward();
+			rightIsClear();
+			frontIsClear();
+			Button.waitForPress();
+		}
 	}
 
 }
