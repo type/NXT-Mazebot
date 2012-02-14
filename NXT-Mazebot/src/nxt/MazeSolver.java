@@ -28,7 +28,7 @@ public class MazeSolver {
 	 * Our compass sensor
 	 */
 	private CompassSensor myCompass;
-	
+
 	/**
 	 * 12 Inches, what we think is the length of one tile
 	 */
@@ -59,16 +59,29 @@ public class MazeSolver {
 	 */
 	public MazeSolver() {
 		// Set up motors and sensors
-		myPilot = new DifferentialPilot(wheelDiam, axelLength, Motor.B, Motor.A, true);
+		myPilot = new DifferentialPilot(wheelDiam, axelLength, Motor.B,
+				Motor.A, true);
 		myFrontSensor = new LightSensor(SensorPort.S1);
 		myRightSensor = new LightSensor(SensorPort.S2);
 		myCompass = new CompassSensor(SensorPort.S3);
-		
-		//Set turn speed
+
+		// Set rotate speed
 		myPilot.setRotateSpeed(rotateSpeed);
 
 		// Calibrate
 		doCalibration();
+	}
+
+	/**
+	 * Program Entry Point
+	 * 
+	 * @param args
+	 *            Command line arguments
+	 */
+	public static void main(String[] args) {
+		// Create and start the solver
+		MazeSolver mySolver = new MazeSolver();
+		mySolver.solve();
 	}
 
 	/**
@@ -77,7 +90,7 @@ public class MazeSolver {
 	public void solve() {
 
 		// Start moving
-		myPilot.travel(travelDist, true);
+		// myPilot.travel(travelDist, true);
 
 		// While we are moving
 		while (!atTarget()) {
@@ -86,18 +99,17 @@ public class MazeSolver {
 			if (rightIsClear()) {
 				// Turn right
 				turnRight();
-				
-				//Check for result
-				if (atTarget())
-				{
+
+				// Check for result
+				if (atTarget()) {
 					break;
 				}
 
-				//Move forward
+				// Move forward
 				goForward();
 
 			} else {
-				//Check for front is clear
+				// Check for front is clear
 				if (frontIsClear()) {
 					goForward();
 				} else {
@@ -114,12 +126,6 @@ public class MazeSolver {
 		mazeSolved();
 	}
 
-	public static void main(String[] args) {
-		// Create and start the solver
-		MazeSolver mySolver = new MazeSolver();
-		mySolver.solve();
-	}
-
 	/**
 	 * Calibration utility method, not sure if we need it
 	 */
@@ -129,12 +135,12 @@ public class MazeSolver {
 		System.out.println("Port 2: Right Sensor");
 		System.out.println("Port 3: Compass\n");
 
-		//Calibrate front
+		// Calibrate front
 		System.out.println("Calibrate High Front");
 		Button.waitForPress();
 		myFrontSensor.calibrateHigh();
 
-		//Calibrate right
+		// Calibrate right
 		System.out.println("Calibrate High Right");
 		Button.waitForPress();
 		myRightSensor.calibrateHigh();
@@ -142,25 +148,25 @@ public class MazeSolver {
 
 	/**
 	 * Right turn method
+	 * Uses compass
 	 */
 	private void turnRight() {
 		System.out.println("R");
 		// Stop momentarily
 		myPilot.stop();
-		
-		//Get current bearing
+
+		// Get current bearing
 		float x = myCompass.getDegrees();
 		float y = (x + 90f) % 360;
-		
-		//Get us within a threshold of the degree that we want
-		while( x < y - 5)
-		{
+
+		// Get us within a threshold of the degree that we want
+		while (x < y - 3) {
 			myPilot.rotate(5);
 			x = myCompass.getDegrees();
 		}
-		
+
 		// Turn Right
-		//myPilot.rotate(-90);
+		// myPilot.rotate(-90);
 	}
 
 	/**
