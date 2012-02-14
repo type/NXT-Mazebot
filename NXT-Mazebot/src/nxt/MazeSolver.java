@@ -114,6 +114,8 @@ public class MazeSolver {
 	 */
 	private boolean rightIsClear() {
 		//
+		System.out.print("Right Light Value: ");
+		System.out.print(myRightSensor.getLightValue());
 		return myRightSensor.getLightValue() > 40;
 	}
 
@@ -124,6 +126,8 @@ public class MazeSolver {
 	 */
 	private boolean frontIsClear() {
 		//
+		System.out.print("Front Light Value: ");
+		System.out.print(myRightSensor.getLightValue());
 		return myFrontSensor.getLightValue() > 40;
 	}
 
