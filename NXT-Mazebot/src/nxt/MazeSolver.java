@@ -42,11 +42,11 @@ public class MazeSolver {
 	/**
 	 * Light Threshold
 	 */
-	private static final int lightThreshold = 150;
+	private static final int lightThreshold = 33;
 	/**
 	 * End of maze threshold
 	 */
-	private static final int endThreshold = 90;
+	private static final int endThreshold = 52;
 	/**
 	 * Speed to rotate
 	 */
@@ -79,8 +79,8 @@ public class MazeSolver {
 	public static void main(String[] args) {
 		// Create and start the solver
 		MazeSolver mySolver = new MazeSolver();
-		 mySolver.solve();
-		//mySolver.testLights();
+		mySolver.solve();
+		// mySolver.testLights();
 	}
 
 	/**
