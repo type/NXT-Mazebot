@@ -79,8 +79,8 @@ public class MazeSolver {
 	public static void main(String[] args) {
 		// Create and start the solver
 		MazeSolver mySolver = new MazeSolver();
-		//mySolver.solve();
-		mySolver.testLights();
+		 mySolver.solve();
+		//mySolver.testLights();
 	}
 
 	/**
@@ -101,7 +101,8 @@ public class MazeSolver {
 					break;
 				}
 
-				// Move forward since the front will be clear if the right was clear
+				// Move forward since the front will be clear if the right was
+				// clear
 				goForward();
 
 			} else {
@@ -109,9 +110,10 @@ public class MazeSolver {
 				if (frontIsClear()) {
 					goForward();
 				} else {
-					// If front and right are blocked, turn left (keep hand against wall)
+					// If front and right are blocked, turn left (keep hand
+					// against wall)
 					turnLeft();
-				}	
+				}
 			}
 
 		}
@@ -163,6 +165,9 @@ public class MazeSolver {
 		// myPilot.rotate(-90);
 	}
 
+	/**
+	 * Turns the robot left using compass
+	 */
 	private void turnLeft() {
 		System.out.println("L");
 		// Stop momentarily
@@ -182,6 +187,7 @@ public class MazeSolver {
 		// Turn Right
 		// myPilot.rotate(-90);
 	}
+
 	/**
 	 * Go forward method
 	 */
@@ -198,7 +204,7 @@ public class MazeSolver {
 	 */
 	private boolean rightIsClear() {
 		//
-		//System.out.print("Right Light Value: ");
+		// System.out.print("Right Light Value: ");
 		System.out.print("R: ");
 		System.out.println(myRightSensor.getLightValue());
 		return myRightSensor.getLightValue() > lightThreshold;
@@ -211,7 +217,7 @@ public class MazeSolver {
 	 */
 	private boolean frontIsClear() {
 		//
-		//System.out.print("Front Light Value: ");
+		// System.out.print("Front Light Value: ");
 		System.out.print("F: ");
 		System.out.println(myFrontSensor.getLightValue());
 		return myFrontSensor.getLightValue() > lightThreshold;
@@ -239,7 +245,7 @@ public class MazeSolver {
 
 	public void testLights() {
 		for (int i = 0; i < 10; i++) {
-			//goForward();
+			// goForward();
 			rightIsClear();
 			frontIsClear();
 			Button.waitForPress();
