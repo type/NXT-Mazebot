@@ -38,7 +38,7 @@ public class MazeSolver {
 	/**
 	 * The space between wheels
 	 */
-	private static final double axelLength = 9.6f;
+	private static final double axleLength = 9.6f;
 	/**
 	 * Light Threshold
 	 */
@@ -57,7 +57,7 @@ public class MazeSolver {
 	 */
 	public MazeSolver() {
 		// Set up motors and sensors
-		myPilot = new DifferentialPilot(wheelDiam, axelLength, Motor.B,
+		myPilot = new DifferentialPilot(wheelDiam, axleLength, Motor.B,
 				Motor.A, true);
 		myFrontSensor = new LightSensor(SensorPort.S1);
 		myRightSensor = new LightSensor(SensorPort.S2);
@@ -104,21 +104,19 @@ public class MazeSolver {
 					break;
 				}
 
-				// Move forward
+				// Move forward since the front will be clear if the right was clear
 				goForward();
 
 			} else {
-				// Check for front is clear
+				// Check if front is clear
 				if (frontIsClear()) {
 					goForward();
 				} else {
-					// Turn right
-					turnRight();
-				}
+					// If front and right are blocked, turn left (keep hand against wall)
+					turnLeft();
+				}	
 			}
 
-			// Move forward
-			goForward();
 		}
 
 		// We are done
@@ -168,6 +166,25 @@ public class MazeSolver {
 		// myPilot.rotate(-90);
 	}
 
+	private void turnLeft() {
+		System.out.println("L");
+		// Stop momentarily
+		myPilot.stop();
+
+		// Get current bearing
+		float x = myCompass.getDegrees();
+		float y = (x + 90f) % 360;
+
+		// Get us within a threshold of the degree that we want
+		while (x < y - 3) {
+			myPilot.rotate(-5);
+			x = myCompass.getDegrees();
+			System.out.println("Bearing: " + x);
+		}
+
+		// Turn Right
+		// myPilot.rotate(-90);
+	}
 	/**
 	 * Go forward method
 	 */
