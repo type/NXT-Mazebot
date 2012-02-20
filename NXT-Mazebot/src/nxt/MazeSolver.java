@@ -30,7 +30,7 @@ public class MazeSolver {
 	/**
 	 * 12 Inches, what we think is the length of one tile
 	 */
-	private static final double travelDist = 30.48f;
+	private static final double travelDist = 10.48f;
 	/**
 	 * The wheel diameter
 	 */
@@ -88,10 +88,7 @@ public class MazeSolver {
 	 */
 	public void solve() {
 
-		// Start moving
-		// myPilot.travel(travelDist, true);
-
-		// While we are moving
+		// While we haven't solved the maze
 		while (!atTarget()) {
 
 			// Check for a change in the light value on the right
