@@ -135,11 +135,16 @@ public class MazeSolver {
 		System.out.println("Calibrate High Front");
 		Button.waitForPress();
 		myFrontSensor.calibrateHigh();
+		System.out.print("Value: ");
+		System.out.println(myFrontSensor.getLightValue());
 
 		// Calibrate right
 		System.out.println("Calibrate High Right");
 		Button.waitForPress();
 		myRightSensor.calibrateHigh();
+		System.out.print("Value: ");
+		System.out.println(myRightSensor.getLightValue());
+		Button.waitForPress();
 	}
 
 	/**
