@@ -65,6 +65,7 @@ public class MazeSolver {
 
 		// Set rotate speed
 		myPilot.setRotateSpeed(rotateSpeed);
+		myPilot.setAcceleration(10);
 
 		// Calibrate
 		doCalibration();
