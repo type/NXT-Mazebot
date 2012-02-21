@@ -4,6 +4,7 @@ import lejos.nxt.Button;
 import lejos.nxt.LightSensor;
 import lejos.nxt.Motor;
 import lejos.nxt.SensorPort;
+import lejos.nxt.Sound;
 import lejos.nxt.addon.CompassSensor;
 import lejos.robotics.navigation.DifferentialPilot;
 
@@ -15,47 +16,47 @@ import lejos.robotics.navigation.DifferentialPilot;
 public class MazeSolver {
 
 	/**
-	 * This is responsible for moving the robot
-	 */
+	* This is responsible for moving the robot
+	*/
 	private DifferentialPilot myPilot;
 	/**
-	 * Our light sensors
-	 */
+	* Our light sensors
+	*/
 	private LightSensor myFrontSensor, myRightSensor;
 	/**
-	 * Our compass sensor
-	 */
+	* Our compass sensor
+	*/
 	private CompassSensor myCompass;
 
 	/**
-	 * 12 Inches, what we think is the length of one tile
-	 */
+	* 12 Inches, what we think is the length of one tile
+	*/
 	private static final double travelDist = 01.50f;
 	private static final double travelDist2 = 1.00f;
 	/**
-	 * The wheel diameter
-	 */
+	* The wheel diameter
+	*/
 	private static final double wheelDiam = 2.5f;
 	/**
-	 * The space between wheels
-	 */
+	* The space between wheels
+	*/
 	private static final double axleLength = 9.6f;
 	/**
-	 * Light Threshold
-	 */
+	* Light Threshold
+	*/
 	private static final int lightThreshold = 40;
 	/**
-	 * End of maze threshold
-	 */
+	* End of maze threshold
+	*/
 	private static final int endThreshold = 52;
 	/**
-	 * Speed to rotate
-	 */
+	* Speed to rotate
+	*/
 	private static final double rotateSpeed = 30.0f;
 
 	/**
-	 * Default constructor, initializes the motors and sensors
-	 */
+	* Default constructor, initializes the motors and sensors
+	*/
 	public MazeSolver() {
 		// Set up motors and sensors
 		myPilot = new DifferentialPilot(wheelDiam, axleLength, Motor.B,
@@ -73,11 +74,11 @@ public class MazeSolver {
 	}
 
 	/**
-	 * Program Entry Point
-	 * 
-	 * @param args
-	 *            Command line arguments
-	 */
+	* Program Entry Point
+	* 
+	* @param args
+	*            Command line arguments
+	*/
 	public static void main(String[] args) {
 		// Create and start the solver
 		MazeSolver mySolver = new MazeSolver();
@@ -86,8 +87,8 @@ public class MazeSolver {
 	}
 
 	/**
-	 * Runs the maze solving algorithm
-	 */
+	* Runs the maze solving algorithm
+	*/
 	public void solve() {
 
 		// While we haven't solved the maze
@@ -126,8 +127,8 @@ public class MazeSolver {
 	}
 
 	/**
-	 * Calibration utility method, not sure if we need it
-	 */
+	* Calibration utility method, not sure if we need it
+	*/
 	private void doCalibration() {
 		// Prep sensor
 		System.out.println("Port 1: Front Sensor");
@@ -151,20 +152,20 @@ public class MazeSolver {
 	}
 
 	/**
-	 * Right turn method Uses compass
-	 */
+	* Right turn method Uses compass
+	*/
 	private void turnRight() {
 		System.out.println("R");
 		/*
-		 * // Stop momentarily myPilot.stop();
-		 * 
-		 * // Get current bearing float x = myCompass.getDegrees(); float y = (x
-		 * - 90f) % 360;
-		 * 
-		 * // Get us within a threshold of the degree that we want while (x < y
-		 * - 3) { myPilot.rotate(-5); x = myCompass.getDegrees();
-		 * System.out.println("Bearing: " + x); }
-		 */
+		* // Stop momentarily myPilot.stop();
+		* 
+		* // Get current bearing float x = myCompass.getDegrees(); float y = (x
+		* - 90f) % 360;
+		* 
+		* // Get us within a threshold of the degree that we want while (x < y
+		* - 3) { myPilot.rotate(-5); x = myCompass.getDegrees();
+		* System.out.println("Bearing: " + x); }
+		*/
 
 		// Turn Right
 		// goForward(4);
@@ -174,20 +175,20 @@ public class MazeSolver {
 	}
 
 	/**
-	 * Turns the robot left using compass
-	 */
+	* Turns the robot left using compass
+	*/
 	private void turnLeft() {
 		System.out.println("L");
 		/*
-		 * // Stop momentarily myPilot.stop();
-		 * 
-		 * // Get current bearing float x = myCompass.getDegrees(); float y = (x
-		 * + 90f) % 360;
-		 * 
-		 * // Get us within a threshold of the degree that we want while (x < y
-		 * - 3) { myPilot.rotate(-5); x = myCompass.getDegrees();
-		 * System.out.println("Bearing: " + x); }
-		 */
+		* // Stop momentarily myPilot.stop();
+		* 
+		* // Get current bearing float x = myCompass.getDegrees(); float y = (x
+		* + 90f) % 360;
+		* 
+		* // Get us within a threshold of the degree that we want while (x < y
+		* - 3) { myPilot.rotate(-5); x = myCompass.getDegrees();
+		* System.out.println("Bearing: " + x); }
+		*/
 
 		// Turn Left
 		goBack();
@@ -197,8 +198,8 @@ public class MazeSolver {
 	}
 
 	/**
-	 * Go forward method
-	 */
+	* Go forward method
+	*/
 	private void goForward(double numTimes, double dist) {
 		System.out.println("F");
 		// Move some more, and return right away
@@ -212,10 +213,10 @@ public class MazeSolver {
 	}
 
 	/**
-	 * Right is clear method
-	 * 
-	 * @return True if right is clear
-	 */
+	* Right is clear method
+	* 
+	* @return True if right is clear
+	*/
 	private boolean rightIsClear() {
 		//
 		// System.out.print("Right Light Value: ");
@@ -225,10 +226,10 @@ public class MazeSolver {
 	}
 
 	/**
-	 * Front is clear method
-	 * 
-	 * @return True if front is clear
-	 */
+	* Front is clear method
+	* 
+	* @return True if front is clear
+	*/
 	private boolean frontIsClear() {
 		//
 		// System.out.print("Front Light Value: ");
@@ -238,20 +239,21 @@ public class MazeSolver {
 	}
 
 	/**
-	 * Checks for a bright object in front to indicate that we are at the target
-	 * 
-	 * @return True if we are at target
-	 */
+	* Checks for a bright object in front to indicate that we are at the target
+	* 
+	* @return True if we are at target
+	*/
 	private boolean atTarget() {
 		return myFrontSensor.getLightValue() > endThreshold;
 	}
 
 	/**
-	 * Maze solved method
-	 */
+	* Maze solved method
+	*/
 	private void mazeSolved() {
 		// We should have completed by now
 		System.out.println("Done");
+		MyTune();
 		Button.waitForPress();
 		System.out.println("X");
 		// Play Victorious Sound!
@@ -266,4 +268,27 @@ public class MazeSolver {
 		}
 	}
 
+	public void MyTune() {
+
+		// NOTE: This tune was generated from a midi using Guy
+		// Truffelli's Brick Music Studio www.aga.it/~guy/lego
+		short[] note = { 2349, 115, 0, 5, 1760, 165, 0, 35, 1760, 28, 0, 13,
+				1976, 23, 0, 18, 1760, 18, 0, 23, 1568, 15, 0, 25, 1480, 103,
+				0, 18, 1175, 180, 0, 20, 1760, 18, 0, 23, 1976, 20, 0, 20,
+				1760, 15, 0, 25, 1568, 15, 0, 25, 2217, 98, 0, 23, 1760, 88, 0,
+				33, 1760, 75, 0, 5, 1760, 20, 0, 20, 1760, 20, 0, 20, 1976, 18,
+				0, 23, 1760, 18, 0, 23, 2217, 225, 0, 15, 2217, 218 };
+		for (int i = 0; i < note.length; i += 2) {
+			final short w = note[i + 1];
+			final int n = note[i];
+			if (n != 0)
+				Sound.playTone(n, w * 10);
+			try {
+				Thread.sleep(w * 2);
+			} catch (InterruptedException e) {
+			}
+		}
+
+	}
 }
+
