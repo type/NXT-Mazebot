@@ -194,7 +194,7 @@ public class MazeSolver {
 	private void goForward() {
 		System.out.println("F");
 		// Move some more, and return right away
-		myPilot.travel(travelDist);
+		myPilot.travel(travelDist, true);
 	}
 
 	/**
