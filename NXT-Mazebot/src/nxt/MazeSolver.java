@@ -30,7 +30,7 @@ public class MazeSolver {
 	/**
 	 * 12 Inches, what we think is the length of one tile
 	 */
-	private static final double travelDist = 10.48f;
+	private static final double travelDist = 05.48f;
 	/**
 	 * The wheel diameter
 	 */
@@ -194,7 +194,7 @@ public class MazeSolver {
 	private void goForward() {
 		System.out.println("F");
 		// Move some more, and return right away
-		myPilot.travel(travelDist, true);
+		myPilot.travel(travelDist);
 	}
 
 	/**
