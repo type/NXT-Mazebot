@@ -133,16 +133,16 @@ public class MazeSolver {
 		System.out.println("Port 3: Compass\n");
 
 		// Calibrate front
-		//System.out.println("Calibrate High Front");
-		//Button.waitForPress();
-		//myFrontSensor.calibrateHigh();
+		// System.out.println("Calibrate High Front");
+		// Button.waitForPress();
+		// myFrontSensor.calibrateHigh();
 		System.out.print("Value: ");
 		System.out.println(myFrontSensor.getLightValue());
 
 		// Calibrate right
-		//System.out.println("Calibrate High Right");
-		//Button.waitForPress();
-		//myRightSensor.calibrateHigh();
+		// System.out.println("Calibrate High Right");
+		// Button.waitForPress();
+		// myRightSensor.calibrateHigh();
 		System.out.print("Value: ");
 		System.out.println(myRightSensor.getLightValue());
 		Button.waitForPress();
@@ -153,22 +153,19 @@ public class MazeSolver {
 	 */
 	private void turnRight() {
 		System.out.println("R");
-		// Stop momentarily
-		myPilot.stop();
-
-		// Get current bearing
-		float x = myCompass.getDegrees();
-		float y = (x - 90f) % 360;
-
-		// Get us within a threshold of the degree that we want
-		while (x < y - 3) {
-			myPilot.rotate(-5);
-			x = myCompass.getDegrees();
-			System.out.println("Bearing: " + x);
-		}
+		/*
+		 * // Stop momentarily myPilot.stop();
+		 * 
+		 * // Get current bearing float x = myCompass.getDegrees(); float y = (x
+		 * - 90f) % 360;
+		 * 
+		 * // Get us within a threshold of the degree that we want while (x < y
+		 * - 3) { myPilot.rotate(-5); x = myCompass.getDegrees();
+		 * System.out.println("Bearing: " + x); }
+		 */
 
 		// Turn Right
-		// myPilot.rotate(-90);
+		myPilot.rotate(-90);
 	}
 
 	/**
@@ -176,22 +173,19 @@ public class MazeSolver {
 	 */
 	private void turnLeft() {
 		System.out.println("L");
-		// Stop momentarily
-		myPilot.stop();
-
-		// Get current bearing
-		float x = myCompass.getDegrees();
-		float y = (x + 90f) % 360;
-
-		// Get us within a threshold of the degree that we want
-		while (x < y - 3) {
-			myPilot.rotate(-5);
-			x = myCompass.getDegrees();
-			System.out.println("Bearing: " + x);
-		}
+		/*
+		 * // Stop momentarily myPilot.stop();
+		 * 
+		 * // Get current bearing float x = myCompass.getDegrees(); float y = (x
+		 * + 90f) % 360;
+		 * 
+		 * // Get us within a threshold of the degree that we want while (x < y
+		 * - 3) { myPilot.rotate(-5); x = myCompass.getDegrees();
+		 * System.out.println("Bearing: " + x); }
+		 */
 
 		// Turn Right
-		// myPilot.rotate(-90);
+		myPilot.rotate(-90);
 	}
 
 	/**
