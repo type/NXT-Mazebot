@@ -185,7 +185,7 @@ public class MazeSolver {
 		 */
 
 		// Turn Right
-		myPilot.rotate(-90);
+		myPilot.rotate(90);
 	}
 
 	/**
