@@ -30,7 +30,8 @@ public class MazeSolver {
 	/**
 	 * 12 Inches, what we think is the length of one tile
 	 */
-	private static final double travelDist = 05.48f;
+	private static final double travelDist = 01.50f;
+	private static final double travelDist2 = 1.00f;
 	/**
 	 * The wheel diameter
 	 */
@@ -42,7 +43,7 @@ public class MazeSolver {
 	/**
 	 * Light Threshold
 	 */
-	private static final int lightThreshold = 33;
+	private static final int lightThreshold = 40;
 	/**
 	 * End of maze threshold
 	 */
@@ -65,7 +66,7 @@ public class MazeSolver {
 
 		// Set rotate speed
 		myPilot.setRotateSpeed(rotateSpeed);
-		myPilot.setAcceleration(15);
+		myPilot.setAcceleration(70);
 
 		// Calibrate
 		doCalibration();
@@ -95,6 +96,7 @@ public class MazeSolver {
 			// Check for a change in the light value on the right
 			if (rightIsClear()) {
 				// Turn right
+				goForward(1.2, travelDist);
 				turnRight();
 
 				// Check for result
@@ -104,12 +106,12 @@ public class MazeSolver {
 
 				// Move forward since the front will be clear if the right was
 				// clear
-				goForward();
+				goForward(1, travelDist2);
 
 			} else {
 				// Check if front is clear
 				if (frontIsClear()) {
-					goForward();
+					goForward(1, travelDist2);
 				} else {
 					// If front and right are blocked, turn left (keep hand
 					// against wall)
@@ -165,7 +167,10 @@ public class MazeSolver {
 		 */
 
 		// Turn Right
-		myPilot.rotate(-90);
+		// goForward(4);
+		// goBack();
+		myPilot.rotate(-76);
+		goForward(6.5, travelDist);
 	}
 
 	/**
@@ -184,17 +189,26 @@ public class MazeSolver {
 		 * System.out.println("Bearing: " + x); }
 		 */
 
-		// Turn Right
-		myPilot.rotate(90);
+		// Turn Left
+		goBack();
+		// goBack();
+		myPilot.rotate(76);
+		goForward(2, travelDist);
 	}
 
 	/**
 	 * Go forward method
 	 */
-	private void goForward() {
+	private void goForward(double numTimes, double dist) {
 		System.out.println("F");
 		// Move some more, and return right away
-		myPilot.travel(travelDist);
+		myPilot.travel(dist * numTimes);
+	}
+
+	private void goBack() {
+		System.out.println("B");
+		// Move some more, and return right away
+		myPilot.travel(travelDist * -2.1);
 	}
 
 	/**
